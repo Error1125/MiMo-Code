@@ -94,3 +94,7 @@ export const backgrounds = {
 - **帧率：** `makeCellBackground({ fps })` — 终端建议 12–20，色场类偏吃 CPU
 - **色场类背景** 用实心块 `"█"` + 前景色填充
 - **线条/稀疏类** 可用 Braille 子像素（参考原版星空的流星画法）
+
+## License
+
+MiMoCode itself is MIT-licensed by Xiaomi; see the [upstream repository](https://github.com/XiaomiMiMo/MiMo-Code).

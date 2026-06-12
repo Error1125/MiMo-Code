@@ -33,6 +33,7 @@ import { DialogStatus } from "@tui/component/dialog-status"
 import { DialogWorktree } from "@tui/component/dialog-worktree"
 import { DialogThemeList } from "@tui/component/dialog-theme-list"
 import { DialogImageList } from "@tui/component/dialog-image-list"
+import { DialogBackground } from "@tui/component/dialog-background"
 import { DialogLogoDesign } from "@tui/component/dialog-logo-design"
 import { DialogHelp } from "./ui/dialog-help"
 import { CommandProvider, useCommandDialog } from "@tui/component/dialog-command"
@@ -705,7 +706,7 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
         name: "background",
       },
       onSelect: () => {
-        dialog.replace(() => <DialogImageList />)
+        dialog.replace(() => <DialogBackground />)
       },
       category: "system",
     },

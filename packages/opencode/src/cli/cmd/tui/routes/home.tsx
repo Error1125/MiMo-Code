@@ -5,6 +5,8 @@ import { Logo } from "../component/logo"
 import { logoThin, logos, type LogoKey } from "@/cli/logo"
 import { StarryBackground } from "../component/starry-background"
 import { BackgroundImage } from "../component/background-image"
+import { Dynamic } from "solid-js/web"
+import { backgrounds } from "../background/registry"
 import { useProject } from "../context/project"
 import { useSync } from "../context/sync"
 import { Toast } from "../ui/toast"
@@ -35,6 +37,10 @@ export function Home() {
     const filename = kv.get("background_image")
     if (!filename || typeof filename !== "string") return undefined
     return path.join(Global.Path.config, "backgrounds", filename)
+  })
+  const animatedBg = createMemo(() => {
+    const key = kv.get("background")
+    return typeof key === "string" && key in backgrounds ? backgrounds[key] : undefined
   })
   const logoKey = createMemo(() => {
     const key = kv.get("logo_design")
@@ -81,10 +87,17 @@ export function Home() {
   })
 
   return (
-    <>
+    <box position="relative" width="100%" height="100%">
       <Show when={!plainTerminal}>
-        <Show when={bgImagePath()} fallback={<StarryBackground meteor={showMeteor} />}>
-          {(p) => <BackgroundImage path={p()} />}
+        <Show
+          when={animatedBg()}
+          fallback={
+            <Show when={bgImagePath()} fallback={<StarryBackground meteor={showMeteor} />}>
+              {(p) => <BackgroundImage path={p()} />}
+            </Show>
+          }
+        >
+          {(entry) => <Dynamic component={entry().component} />}
         </Show>
       </Show>
       <box flexGrow={1} alignItems="center" paddingLeft={8} paddingRight={8} zIndex={1}>
@@ -160,6 +173,6 @@ export function Home() {
           <TuiPluginRuntime.Slot name="home_footer" mode="single_winner" />
         </box>
       </Show>
-    </>
+    </box>
   )
 }
